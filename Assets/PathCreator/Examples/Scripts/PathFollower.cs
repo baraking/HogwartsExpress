@@ -12,8 +12,11 @@ namespace PathCreation.Examples
         public Vector3 originPosition;
         float distanceTravelled;
 
-        private readonly string fullTrain = "Train";
-        private readonly string trainCart = "Cart";
+        public static Vector3 heightOfCart = new Vector3(0, 0.5f, 0);
+        public static float initialRotation = 90;
+
+        private static readonly string fullTrain = "Train";
+        private static readonly string trainCart = "Cart";
 
         private void Awake()
         {
@@ -34,6 +37,7 @@ namespace PathCreation.Examples
                 {
                     pathCreator = transform.parent.GetComponentInParent<PathFollower>().pathCreator;
                     speed = transform.parent.GetComponentInParent<PathFollower>().speed;
+                    endOfPathInstruction = transform.parent.GetComponentInParent<PathFollower>().endOfPathInstruction;
                 }
             }
             if (pathCreator != null)
@@ -48,8 +52,9 @@ namespace PathCreation.Examples
             if (pathCreator != null)
             {
                 distanceTravelled += speed * Time.deltaTime;
-                transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude, endOfPathInstruction);
+                transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude, endOfPathInstruction);
                 transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled - originPosition.magnitude, endOfPathInstruction);
+                transform.rotation = Quaternion.AngleAxis(90, transform.forward) * transform.rotation;
             }
         }
 
