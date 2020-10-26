@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace PathCreation.Examples
 {
@@ -20,6 +21,11 @@ namespace PathCreation.Examples
         public float distanceFromStation = 0.95f;
         public float distanceFromStationThreshold = 0.15f;
 
+        public int trainSize = 0;
+        public float sizeOfCart = 4;
+        public float sizeOfSpaceBetweenCarts = 0.5f;
+        public float extraSpace = 0;
+
         private static readonly string fullTrain = "Train";
         private static readonly string trainCart = "Cart";
 
@@ -30,8 +36,10 @@ namespace PathCreation.Examples
                 if (child.gameObject.CompareTag(trainCart))
                 {
                     child.gameObject.AddComponent<PathFollower>();
+                    trainSize++;
                 }
             }
+            extraSpace = trainSize * sizeOfCart + (trainSize - 1) * sizeOfSpaceBetweenCarts;
         }
 
         void Start() {
@@ -46,6 +54,7 @@ namespace PathCreation.Examples
             if (pathCreator != null)
             {
                 // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
+                distanceTravelled += extraSpace;
                 pathCreator.pathUpdated += OnPathChanged;
             }
         }
@@ -56,9 +65,10 @@ namespace PathCreation.Examples
             {
                 distanceTravelled += speed * Time.deltaTime;
                 float relatedLocationOnTrack = getRealtedLocationOnTrack();
-                if(transform.tag == fullTrain)
+                float extraSpace = 0f;
+                if (transform.tag == fullTrain)
                 {
-                    if(relatedLocationOnTrack < 1- distanceFromStation)
+                    if (relatedLocationOnTrack < 1- distanceFromStation)
                     {
                         TrainSetSpeed(OriginalSpeed / 3);
                     }
@@ -83,7 +93,7 @@ namespace PathCreation.Examples
                         TrainSetSpeed(OriginalSpeed);
                     }
                 }
-
+                print(extraSpace);
                 transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
                 transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled - originPosition.magnitude, endOfPathInstruction);
                 transform.rotation = Quaternion.AngleAxis(90, transform.forward) * transform.rotation;
@@ -109,7 +119,11 @@ namespace PathCreation.Examples
 
         void TrainStop()
         {
+            float minValue = distanceFromStation - distanceFromStationThreshold;
             speed = 0;
+            UpdateSpeedForChildCarts(speed);
+            StartCoroutine(WaitFunction(3));
+            speed = OriginalSpeed/3;
             UpdateSpeedForChildCarts(speed);
         }
 
@@ -134,6 +148,8 @@ namespace PathCreation.Examples
             pathCreator = transform.parent.GetComponentInParent<PathFollower>().pathCreator;
             speed = transform.parent.GetComponentInParent<PathFollower>().speed;
             endOfPathInstruction = transform.parent.GetComponentInParent<PathFollower>().endOfPathInstruction;
+            trainSize = transform.parent.GetComponentInParent<PathFollower>().trainSize;
+            extraSpace = transform.parent.GetComponentInParent<PathFollower>().extraSpace;
         }
 
         // If the path changes during the game, update the distance travelled so that the follower's position on the new path
@@ -145,6 +161,11 @@ namespace PathCreation.Examples
         float getRealtedLocationOnTrack()
         {
             return ((distanceTravelled - originPosition.magnitude * 0.75f) / pathCreator.path.length);
+        }
+
+        public IEnumerator WaitFunction(int time)
+        {
+            yield return new WaitForSeconds(time);
         }
     }
 }
