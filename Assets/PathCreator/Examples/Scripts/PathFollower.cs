@@ -11,6 +11,7 @@ namespace PathCreation.Examples
 
         public PathCreator pathCreator;
         public EndOfPathInstruction endOfPathInstruction;
+        private EndOfPathInstruction previousEndOfPathInstruction;
         public float speed = OriginalSpeed;
         public Vector3 originPosition;
         public float distanceTravelled;
@@ -31,6 +32,7 @@ namespace PathCreation.Examples
 
         private void Awake()
         {
+            previousEndOfPathInstruction = endOfPathInstruction;
             foreach (Transform child in gameObject.transform)
             {
                 if (child.gameObject.CompareTag(trainCart))
@@ -64,7 +66,7 @@ namespace PathCreation.Examples
             if (pathCreator != null)
             {
                 distanceTravelled += speed * Time.deltaTime;
-                float relatedLocationOnTrack = getRealtedLocationOnTrack();
+                float relatedLocationOnTrack = GetRealtedLocationOnTrack();
                 float extraSpace = 0f;
                 if (transform.tag == fullTrain)
                 {
@@ -86,7 +88,18 @@ namespace PathCreation.Examples
                     }
                     else if (relatedLocationOnTrack >= 1)
                     {
-                        TrainStop();
+                        if(endOfPathInstruction== EndOfPathInstruction.Stop)
+                        {
+                            TrainStop();
+                        }
+                        else if(endOfPathInstruction == EndOfPathInstruction.Loop)
+                        {
+                            distanceTravelled = extraSpace;
+                        }
+                        else if (endOfPathInstruction == EndOfPathInstruction.Reverse)
+                        {
+                            //Need To Add Here!!!
+                        }
                     }
                     else if (speed != OriginalSpeed)
                     {
@@ -123,8 +136,8 @@ namespace PathCreation.Examples
             speed = 0;
             UpdateSpeedForChildCarts(speed);
             StartCoroutine(WaitFunction(3));
-            speed = OriginalSpeed/3;
-            UpdateSpeedForChildCarts(speed);
+            //speed = OriginalSpeed/3;
+            //UpdateSpeedForChildCarts(speed);
         }
 
         void TrainSetSpeed(float newSpeed)
@@ -144,10 +157,25 @@ namespace PathCreation.Examples
             }
         }
 
+        void UpdateAllChildrenData()
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.gameObject.CompareTag(trainCart))
+                {
+                    child.GetComponent<PathFollower>().pathCreator = pathCreator;
+                    child.GetComponent<PathFollower>().speed = speed;
+                    child.GetComponent<PathFollower>().endOfPathInstruction = endOfPathInstruction;
+                    child.GetComponent<PathFollower>().previousEndOfPathInstruction = previousEndOfPathInstruction;
+                }
+            }
+        }
+
         void UpdateChildCart(){
             pathCreator = transform.parent.GetComponentInParent<PathFollower>().pathCreator;
             speed = transform.parent.GetComponentInParent<PathFollower>().speed;
             endOfPathInstruction = transform.parent.GetComponentInParent<PathFollower>().endOfPathInstruction;
+            previousEndOfPathInstruction = endOfPathInstruction;
             trainSize = transform.parent.GetComponentInParent<PathFollower>().trainSize;
             extraSpace = transform.parent.GetComponentInParent<PathFollower>().extraSpace;
         }
@@ -158,7 +186,7 @@ namespace PathCreation.Examples
             distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
         }
 
-        float getRealtedLocationOnTrack()
+        float GetRealtedLocationOnTrack()
         {
             return ((distanceTravelled - originPosition.magnitude * 0.75f) / pathCreator.path.length);
         }
