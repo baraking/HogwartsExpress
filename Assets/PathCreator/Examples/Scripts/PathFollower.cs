@@ -108,7 +108,7 @@ namespace PathCreation.Examples
                 }
                 print(extraSpace);
                 transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
-                transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled - originPosition.magnitude, endOfPathInstruction);
+                transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
                 transform.rotation = Quaternion.AngleAxis(90, transform.forward) * transform.rotation;
             }
         }
