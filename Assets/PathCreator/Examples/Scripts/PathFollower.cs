@@ -95,10 +95,13 @@ namespace PathCreation.Examples
                         else if(endOfPathInstruction == EndOfPathInstruction.Loop)
                         {
                             distanceTravelled = extraSpace;
+                            UpdateAllChildrenData();
                         }
                         else if (endOfPathInstruction == EndOfPathInstruction.Reverse)
                         {
                             //Need To Add Here!!!
+                            UpdateAllChildrenData();
+                            TrainSetSpeed(OriginalSpeed / 3);
                         }
                     }
                     else if (speed != OriginalSpeed)
