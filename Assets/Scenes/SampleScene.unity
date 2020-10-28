@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 809342756}
-  endOfPathInstruction: 0
+  endOfPathInstruction: 2
   speed: 15
   originPosition: {x: 0, y: 0, z: 0}
   distanceTravelled: 0

@@ -70,6 +70,38 @@ namespace PathCreation.Examples
                 float extraSpace = 0f;
                 if (transform.tag == fullTrain)
                 {
+                    if (endOfPathInstruction != previousEndOfPathInstruction)
+                    {
+                        previousEndOfPathInstruction = endOfPathInstruction;
+                        UpdateAllChildrenData();
+                    }
+
+                    if (endOfPathInstruction == EndOfPathInstruction.Loop)
+                    {
+                        if (relatedLocationOnTrack >= 1)
+                        {
+                            while (GetRealtedLocationOnTrack() >= 1)
+                            {
+                                distanceTravelled -= distanceTravelled - originPosition.magnitude * 0.75f;
+                                UpdateAllChildrenDistanceTravelled();
+                            }
+                            relatedLocationOnTrack = GetRealtedLocationOnTrack();
+                        }
+                    }
+                    else if (endOfPathInstruction == EndOfPathInstruction.Stop)
+                    {
+                        if (relatedLocationOnTrack > 1.1)
+                        {
+                            while (GetRealtedLocationOnTrack() >= 1.1)
+                            {
+                                distanceTravelled -= distanceTravelled - originPosition.magnitude * 0.75f;
+                                UpdateAllChildrenDistanceTravelled();
+                            }
+                            relatedLocationOnTrack = GetRealtedLocationOnTrack();
+                        }
+                    }
+
+
                     if (relatedLocationOnTrack < 1- distanceFromStation)
                     {
                         TrainSetSpeed(OriginalSpeed / 3);
@@ -88,7 +120,7 @@ namespace PathCreation.Examples
                     }
                     else if (relatedLocationOnTrack >= 1)
                     {
-                        if(endOfPathInstruction== EndOfPathInstruction.Stop)
+                        if(endOfPathInstruction == EndOfPathInstruction.Stop)
                         {
                             TrainStop();
                         }
@@ -109,7 +141,7 @@ namespace PathCreation.Examples
                         TrainSetSpeed(OriginalSpeed);
                     }
                 }
-                print(extraSpace);
+                print(distanceTravelled - originPosition.magnitude * 0.75f);
                 transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
                 transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
                 transform.rotation = Quaternion.AngleAxis(90, transform.forward) * transform.rotation;
@@ -135,10 +167,9 @@ namespace PathCreation.Examples
 
         void TrainStop()
         {
-            float minValue = distanceFromStation - distanceFromStationThreshold;
             speed = 0;
             UpdateSpeedForChildCarts(speed);
-            StartCoroutine(WaitFunction(3));
+            //StartCoroutine(WaitFunction(3));
             //speed = OriginalSpeed/3;
             //UpdateSpeedForChildCarts(speed);
         }
@@ -170,6 +201,17 @@ namespace PathCreation.Examples
                     child.GetComponent<PathFollower>().speed = speed;
                     child.GetComponent<PathFollower>().endOfPathInstruction = endOfPathInstruction;
                     child.GetComponent<PathFollower>().previousEndOfPathInstruction = previousEndOfPathInstruction;
+                }
+            }
+        }
+
+        void UpdateAllChildrenDistanceTravelled()
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.gameObject.CompareTag(trainCart))
+                {
+                    child.GetComponent<PathFollower>().distanceTravelled = distanceTravelled;
                 }
             }
         }
