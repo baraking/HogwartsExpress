@@ -5,7 +5,7 @@ using UnityEngine;
 public class Constants
 {
     public static readonly float OriginalSpeed = 15;
-    public static readonly int TrainStopWaittime = 10;
+    public static readonly int TrainStopWaitTime = 5;
 
     public static readonly string fullTrain = "Train";
     public static readonly string trainCart = "Cart";

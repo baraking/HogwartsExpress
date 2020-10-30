@@ -47,14 +47,12 @@ public class TrainSpeedEvent : MonoBehaviour
                 if (other.gameObject.transform.parent.tag == Constants.fullTrain)
                 {
                     other.gameObject.transform.parent.GetComponent<PathCreation.PathFollower>().TrainStop();
-                    StartCoroutine(WaitFunction(Constants.TrainStopWaittime));
-                    other.gameObject.transform.parent.GetComponent<PathCreation.PathFollower>().TrainAccelerate(speed);
+                    StartCoroutine(StopTrain(other.gameObject.transform.parent,Constants.TrainStopWaitTime));
                 }
                 else if (other.tag == Constants.fullTrain)
                 {
                     other.GetComponent<PathCreation.PathFollower>().TrainStop();
-                    StartCoroutine(WaitFunction(Constants.TrainStopWaittime));
-                    other.GetComponent<PathCreation.PathFollower>().TrainAccelerate(speed);
+                    StartCoroutine(StopTrain(other.gameObject.transform, Constants.TrainStopWaitTime));
                 }
             }
             else if (mode == SpeedEventMode.accelerate)
@@ -71,8 +69,12 @@ public class TrainSpeedEvent : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitFunction(int time)
+    public IEnumerator StopTrain(Transform transform, int time)
     {
-        yield return new WaitForSecondsRealtime(time);
+        print("Start a new");
+        yield return new WaitForSeconds(time);
+        transform.GetComponent<PathCreation.PathFollower>().TrainAccelerate(speed);
+        StopAllCoroutines();
+        yield break;
     }
 }
