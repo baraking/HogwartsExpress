@@ -7,12 +7,10 @@ namespace PathCreation.Examples
     // Depending on the end of path instruction, will either loop, reverse, or stop at the end of the path.
     public class PathFollower : MonoBehaviour
     {
-        public static readonly float OriginalSpeed = 15;
-
         public PathCreator pathCreator;
         public EndOfPathInstruction endOfPathInstruction;
         private EndOfPathInstruction previousEndOfPathInstruction;
-        public float speed = OriginalSpeed;
+        public float speed = Constants.OriginalSpeed;
         public Vector3 originPosition;
         public float distanceTravelled;
 
@@ -27,15 +25,12 @@ namespace PathCreation.Examples
         public float sizeOfSpaceBetweenCarts = 0.5f;
         public float extraSpace = 0;
 
-        private static readonly string fullTrain = "Train";
-        private static readonly string trainCart = "Cart";
-
         private void Awake()
         {
             previousEndOfPathInstruction = endOfPathInstruction;
             foreach (Transform child in gameObject.transform)
             {
-                if (child.gameObject.CompareTag(trainCart))
+                if (child.gameObject.CompareTag(Constants.trainCart))
                 {
                     child.gameObject.AddComponent<PathFollower>();
                     trainSize++;
@@ -48,7 +43,7 @@ namespace PathCreation.Examples
             originPosition = transform.localPosition;
             if (pathCreator == null)
             {
-                if (transform.parent != null && transform.parent.tag == fullTrain)
+                if (transform.parent != null && transform.parent.tag == Constants.fullTrain)
                 {
                     UpdateChildCart();
                 }
@@ -68,7 +63,7 @@ namespace PathCreation.Examples
                 distanceTravelled += speed * Time.deltaTime;
                 float relatedLocationOnTrack = GetRealtedLocationOnTrack();
                 float extraSpace = 0f;
-                if (transform.tag == fullTrain)
+                if (transform.tag == Constants.fullTrain)
                 {
                     if (endOfPathInstruction != previousEndOfPathInstruction)
                     {
@@ -104,19 +99,19 @@ namespace PathCreation.Examples
 
                     if (relatedLocationOnTrack < 1- distanceFromStation)
                     {
-                        TrainSetSpeed(OriginalSpeed / 3);
+                        TrainSetSpeed(Constants.OriginalSpeed / 3);
                     }
                     else if (relatedLocationOnTrack > 1 - distanceFromStation&&relatedLocationOnTrack < 1 - distanceFromStation + distanceFromStationThreshold)
                     {
-                        TrainAccelerateUp(relatedLocationOnTrack, OriginalSpeed / 3, OriginalSpeed);
+                        TrainAccelerateUp(relatedLocationOnTrack, Constants.OriginalSpeed / 3, Constants.OriginalSpeed);
                     }
                     else if(relatedLocationOnTrack > distanceFromStation - distanceFromStationThreshold && relatedLocationOnTrack < distanceFromStation)
                     {
-                        TrainAccelerateDown(relatedLocationOnTrack, OriginalSpeed,OriginalSpeed / 3);
+                        TrainAccelerateDown(relatedLocationOnTrack, Constants.OriginalSpeed, Constants.OriginalSpeed / 3);
                     }
                     else if (relatedLocationOnTrack > distanceFromStation && relatedLocationOnTrack < 1)
                     {
-                        TrainSetSpeed(OriginalSpeed / 3);
+                        TrainSetSpeed(Constants.OriginalSpeed / 3);
                     }
                     else if (relatedLocationOnTrack >= 1)
                     {
@@ -133,12 +128,12 @@ namespace PathCreation.Examples
                         {
                             //Need To Add Here!!!
                             UpdateAllChildrenData();
-                            TrainSetSpeed(OriginalSpeed / 3);
+                            TrainSetSpeed(Constants.OriginalSpeed / 3);
                         }
                     }
-                    else if (speed != OriginalSpeed)
+                    else if (speed != Constants.OriginalSpeed)
                     {
-                        TrainSetSpeed(OriginalSpeed);
+                        TrainSetSpeed(Constants.OriginalSpeed);
                     }
                 }
                 print(distanceTravelled - originPosition.magnitude * 0.75f);
@@ -174,7 +169,7 @@ namespace PathCreation.Examples
             //UpdateSpeedForChildCarts(speed);
         }
 
-        void TrainSetSpeed(float newSpeed)
+        public void TrainSetSpeed(float newSpeed)
         {
             speed = newSpeed;
             UpdateSpeedForChildCarts(speed);
@@ -184,7 +179,7 @@ namespace PathCreation.Examples
         {
             foreach (Transform child in gameObject.transform)
             {
-                if (child.gameObject.CompareTag(trainCart))
+                if (child.gameObject.CompareTag(Constants.trainCart))
                 {
                     child.GetComponent<PathFollower>().speed = newSpeed;
                 }
@@ -195,7 +190,7 @@ namespace PathCreation.Examples
         {
             foreach (Transform child in gameObject.transform)
             {
-                if (child.gameObject.CompareTag(trainCart))
+                if (child.gameObject.CompareTag(Constants.trainCart))
                 {
                     child.GetComponent<PathFollower>().pathCreator = pathCreator;
                     child.GetComponent<PathFollower>().speed = speed;
@@ -209,7 +204,7 @@ namespace PathCreation.Examples
         {
             foreach (Transform child in gameObject.transform)
             {
-                if (child.gameObject.CompareTag(trainCart))
+                if (child.gameObject.CompareTag(Constants.trainCart))
                 {
                     child.GetComponent<PathFollower>().distanceTravelled = distanceTravelled;
                 }
