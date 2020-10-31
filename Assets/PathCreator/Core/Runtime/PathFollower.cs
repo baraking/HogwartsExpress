@@ -15,7 +15,8 @@ namespace PathCreation
         public Vector3 originPosition;
         public float distanceTravelled;
 
-        public static Vector3 heightOfCart = new Vector3(0, 0.5f, 0);
+        public static float yExtraHeight = 1.8f;
+        public static Vector3 heightOfCart = new Vector3(0, yExtraHeight, 0);
         public static float initialRotation = 90;
 
         public static float accelarationSpeed = 0.1f;
