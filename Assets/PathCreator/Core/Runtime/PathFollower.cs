@@ -19,6 +19,7 @@ namespace PathCreation
         public static float initialRotation = 90;
 
         public static float accelarationSpeed = 0.1f;
+        public float innerClock=-1;
 
         public int trainSize = 0;
         public float sizeOfCart = 4;
@@ -61,22 +62,38 @@ namespace PathCreation
         {
             if (pathCreator != null)
             {
-                if (speed < targetSpeed)
+                if (transform.tag == Constants.fullTrain)
                 {
-                    speed += accelarationSpeed;
-                    if(speed> targetSpeed)
+                    if (innerClock >= 0)
                     {
-                        speed = targetSpeed;
+                        if (innerClock >= Constants.TrainStopWaitTime)
+                        {
+                            innerClock = -1;
+                            UpdateAllChildrenData();
+                        }
+                        innerClock += Time.deltaTime;
                     }
-                }
-                else if (speed > targetSpeed)
-                {
-                    speed -= accelarationSpeed;
-                    if (speed < targetSpeed)
+                    else
                     {
-                        speed = targetSpeed;
+                        if (speed < targetSpeed)
+                        {
+                            speed += accelarationSpeed;
+                            if (speed > targetSpeed)
+                            {
+                                speed = targetSpeed;
+                            }
+                        }
+                        else if (speed > targetSpeed)
+                        {
+                            speed -= accelarationSpeed;
+                            if (speed < targetSpeed)
+                            {
+                                speed = targetSpeed;
+                            }
+                        }
+                        UpdateAllChildrenData();
                     }
-                }
+                } 
 
                 distanceTravelled += speed * Time.deltaTime;
                 transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
@@ -91,10 +108,12 @@ namespace PathCreation
             UpdateAllChildrenData();
         }
 
-        public void TrainStop()
+        public void TrainStop(float newTargetSpeed)
         {
             speed = 0;
             UpdateSpeedForChildCarts(speed);
+            innerClock = 0.0f;
+            targetSpeed = newTargetSpeed;
         }
 
         public void TrainSetSpeed(float newSpeed)
@@ -110,6 +129,7 @@ namespace PathCreation
                 if (child.gameObject.CompareTag(Constants.trainCart))
                 {
                     child.GetComponent<PathFollower>().speed = newSpeed;
+                    child.GetComponent<PathFollower>().targetSpeed = targetSpeed;
                 }
             }
         }

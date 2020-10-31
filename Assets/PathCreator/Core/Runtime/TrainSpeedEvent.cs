@@ -24,7 +24,7 @@ public class TrainSpeedEvent : MonoBehaviour
             Gizmos.color = Color.blue;
         }
 
-        Gizmos.DrawSphere(transform.position, 1);
+        Gizmos.DrawSphere(transform.position, 5);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,13 +46,13 @@ public class TrainSpeedEvent : MonoBehaviour
             {
                 if (other.gameObject.transform.parent.tag == Constants.fullTrain)
                 {
-                    other.gameObject.transform.parent.GetComponent<PathCreation.PathFollower>().TrainStop();
-                    StartCoroutine(StopTrain(other.gameObject.transform.parent,Constants.TrainStopWaitTime));
+                    other.gameObject.transform.parent.GetComponent<PathCreation.PathFollower>().TrainStop(speed);
+                    
                 }
                 else if (other.tag == Constants.fullTrain)
                 {
-                    other.GetComponent<PathCreation.PathFollower>().TrainStop();
-                    StartCoroutine(StopTrain(other.gameObject.transform, Constants.TrainStopWaitTime));
+                    other.GetComponent<PathCreation.PathFollower>().TrainStop(speed);
+                    
                 }
             }
             else if (mode == SpeedEventMode.accelerate)
@@ -67,14 +67,5 @@ public class TrainSpeedEvent : MonoBehaviour
                 }
             }
         }
-    }
-
-    public IEnumerator StopTrain(Transform transform, int time)
-    {
-        print("Start a new");
-        yield return new WaitForSeconds(time);
-        transform.GetComponent<PathCreation.PathFollower>().TrainAccelerate(speed);
-        StopAllCoroutines();
-        yield break;
     }
 }
