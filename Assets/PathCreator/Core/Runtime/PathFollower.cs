@@ -11,16 +11,14 @@ namespace PathCreation
         public EndOfPathInstruction endOfPathInstruction;
         private EndOfPathInstruction previousEndOfPathInstruction;
         public float speed = Constants.OriginalSpeed;
+        public float targetSpeed;
         public Vector3 originPosition;
         public float distanceTravelled;
 
         public static Vector3 heightOfCart = new Vector3(0, 0.5f, 0);
         public static float initialRotation = 90;
 
-        public float distanceFromStation = 0.95f;
-        public float distanceFromStationThreshold = 0.15f;
-
-        public static float accelarationSpeed = 10f;
+        public static float accelarationSpeed = 0.1f;
 
         public int trainSize = 0;
         public float sizeOfCart = 4;
@@ -43,6 +41,7 @@ namespace PathCreation
 
         void Start() {
             originPosition = transform.localPosition;
+            targetSpeed = speed;
             if (pathCreator == null)
             {
                 if (transform.parent != null && transform.parent.tag == Constants.fullTrain)
@@ -62,6 +61,23 @@ namespace PathCreation
         {
             if (pathCreator != null)
             {
+                if (speed < targetSpeed)
+                {
+                    speed += accelarationSpeed;
+                    if(speed> targetSpeed)
+                    {
+                        speed = targetSpeed;
+                    }
+                }
+                else if (speed > targetSpeed)
+                {
+                    speed -= accelarationSpeed;
+                    if (speed < targetSpeed)
+                    {
+                        speed = targetSpeed;
+                    }
+                }
+
                 distanceTravelled += speed * Time.deltaTime;
                 transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
                 transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
@@ -69,32 +85,10 @@ namespace PathCreation
             }
         }
 
-        public void TrainAccelerate(float targetSpeed)
+        public void TrainAccelerate(float newTargetSpeed)
         {
-
-            StartCoroutine(ChangeSpeed(targetSpeed));
-        }
-
-        IEnumerator ChangeSpeed(float targetSpeed)
-        {
-            float duration = Mathf.Abs(speed - targetSpeed) / accelarationSpeed;
-            float elapsed = 0.0f;
-            while (elapsed < duration)
-            {
-                if (speed > targetSpeed)
-                {
-                    speed = Mathf.Lerp(speed, targetSpeed, elapsed / duration);
-                }
-                else
-                {
-                    speed = Mathf.Lerp(targetSpeed, speed, elapsed / duration);
-                }
-                UpdateSpeedForChildCarts(speed);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            speed = targetSpeed;
-            UpdateSpeedForChildCarts(speed);
+            targetSpeed = newTargetSpeed;
+            UpdateAllChildrenData();
         }
 
         public void TrainStop()
@@ -128,6 +122,7 @@ namespace PathCreation
                 {
                     child.GetComponent<PathFollower>().pathCreator = pathCreator;
                     child.GetComponent<PathFollower>().speed = speed;
+                    child.GetComponent<PathFollower>().targetSpeed = targetSpeed;
                     child.GetComponent<PathFollower>().endOfPathInstruction = endOfPathInstruction;
                     child.GetComponent<PathFollower>().previousEndOfPathInstruction = previousEndOfPathInstruction;
                 }
@@ -164,5 +159,7 @@ namespace PathCreation
         {
             return ((distanceTravelled - originPosition.magnitude * 0.75f) / pathCreator.path.length);
         }
+
+
     }
 }

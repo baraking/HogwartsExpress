@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 572416353}
   - component: {fileID: 572416352}
+  - component: {fileID: 572416354}
   m_Layer: 0
   m_Name: SpeedChanger
   m_TagString: Untagged
@@ -150,7 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232a444dc5c22004995a74374b782e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1000
+  mode: 1
+  speed: 50
 --- !u!4 &572416353
 Transform:
   m_ObjectHideFlags: 0
@@ -159,12 +161,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572416351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.290135, y: -0.28, z: 21.28}
+  m_LocalPosition: {x: -51.5, y: 0.71, z: 18.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &572416354
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572416351}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +495,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1830453944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1872844748464511669, guid: 4a8d2155a0a028244bdd34f28552c365,
+    type: 3}
+  m_PrefabInstance: {fileID: 4579554107975820294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1830453947
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830453944}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 6, z: 6}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1889953444
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,10 +801,9 @@ MonoBehaviour:
   pathCreator: {fileID: 809342756}
   endOfPathInstruction: 0
   speed: 15
+  targetSpeed: 0
   originPosition: {x: 0, y: 0, z: 0}
   distanceTravelled: 0
-  distanceFromStation: 0.95
-  distanceFromStationThreshold: 0.15
   trainSize: 0
   sizeOfCart: 4
   sizeOfSpaceBetweenCarts: 0.5
