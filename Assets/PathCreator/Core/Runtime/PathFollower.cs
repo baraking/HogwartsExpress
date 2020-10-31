@@ -15,7 +15,7 @@ namespace PathCreation
         public Vector3 originPosition;
         public float distanceTravelled;
 
-        public static float yExtraHeight = 1.8f;
+        public static float yExtraHeight = .9f;
         public static Vector3 heightOfCart = new Vector3(0, yExtraHeight, 0);
         public static float initialRotation = 90;
 
@@ -23,7 +23,7 @@ namespace PathCreation
         public float innerClock=-1;
 
         public int trainSize = 0;
-        public float sizeOfCart = 4;
+        public float sizeOfCart = 8;
         public float sizeOfSpaceBetweenCarts = 0.5f;
         public float extraSpace = 0;
 
