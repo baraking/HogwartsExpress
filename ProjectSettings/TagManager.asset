@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cart
   - Train
+  - Door
   layers:
   - Default
   - TransparentFX

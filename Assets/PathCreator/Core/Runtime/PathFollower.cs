@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace PathCreation
@@ -14,6 +15,7 @@ namespace PathCreation
         public float targetSpeed;
         public Vector3 originPosition;
         public float distanceTravelled;
+        public bool openDoors = false;
 
         public static float yExtraHeight = .9f;
         public static Vector3 heightOfCart = new Vector3(0, yExtraHeight, 0);
@@ -67,6 +69,34 @@ namespace PathCreation
                 {
                     if (innerClock >= 0)
                     {
+                        if(innerClock>= Constants.TrainOpenDoorsTime&& innerClock < Constants.TrainCloseDoorsTime&& !openDoors)
+                        {
+                            print("Entered");
+                            openDoors = true;
+                            //play animations
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                print("count");
+                                if (child.gameObject.CompareTag(Constants.doorTag))
+                                {
+                                    print("found");
+                                    child.gameObject.GetComponent<DoorAnimation>().DoorOpenAnimation();
+                                }
+                            }
+                        }
+                        if (innerClock >= Constants.TrainCloseDoorsTime && openDoors)
+                        {
+                            openDoors = false;
+                            //play animations
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                if (child.gameObject.CompareTag(Constants.doorTag))
+                                {
+                                    child.gameObject.GetComponent<DoorAnimation>().DoorCloseAnimation();
+                                }
+                            }
+                        }
+
                         if (innerClock >= Constants.TrainStopWaitTime)
                         {
                             innerClock = -1;
