@@ -21,4 +21,16 @@ public class DoorAnimation : MonoBehaviour
     {
         animator.Play("DoorCloseAnimation");
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        print("play");
+        animator.Play("DoorOpenAnimation");
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        print("played");
+        animator.Play("DoorCloseAnimation");
+    }
 }

@@ -9,17 +9,16 @@ public class DoorAnimation1 : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-
     }
 
     public void DoorOpenAnimation1()
     {
         print("play1");
-        animator.Play("DoorOpenAnimation 1");
+        animator.Play("DoorOpenAnimation1");
     }
 
     public void DoorCloseAnimation1()
     {
-        animator.Play("DoorCloseAnimation 1");
+        animator.Play("DoorCloseAnimation1");
     }
 }

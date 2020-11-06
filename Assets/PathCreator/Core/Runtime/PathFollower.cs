@@ -18,8 +18,8 @@ namespace PathCreation
         public bool openDoors = false;
 
         public GameObject doorAnchor;
-        public GameObject door;
-        public GameObject door1;
+        public DoorAnimation door;
+        public DoorAnimation1 door1;
 
         public static float yExtraHeight = .9f;
         public static Vector3 heightOfCart = new Vector3(0, yExtraHeight, 0);
@@ -76,11 +76,11 @@ namespace PathCreation
                             if (grandChild.gameObject.CompareTag(Constants.doorTag))
                             {
                                 if (grandChild.name==("Door")){
-                                    door = grandChild.gameObject;
+                                    door = grandChild.GetComponent<DoorAnimation>();
                                 }
                                 else if (grandChild.name == ("Door (1)"))
                                 {
-                                    door1 = grandChild.gameObject;
+                                    door1 = grandChild.GetComponent<DoorAnimation1>();
                                 }
                             }
                         }
@@ -107,6 +107,7 @@ namespace PathCreation
                             {
                                 print("enter");
                                 door.GetComponent<DoorAnimation>().DoorOpenAnimation();
+                                print("entered");
                                 door1.GetComponent<DoorAnimation1>().DoorOpenAnimation1();
                             }
                         }
@@ -118,6 +119,7 @@ namespace PathCreation
                             {
                                 print("exit");
                                 door.GetComponent<DoorAnimation>().DoorCloseAnimation();
+                                print("exited");
                                 door1.GetComponent<DoorAnimation1>().DoorCloseAnimation1();
                             }
                         }
