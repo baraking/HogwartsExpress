@@ -15,11 +15,11 @@ public class DoorAnimation1 : MonoBehaviour
     public void DoorOpenAnimation1()
     {
         print("play1");
-        animator.Play("DoorOpenAnimation1");
+        animator.Play("DoorOpenAnimation 1");
     }
 
     public void DoorCloseAnimation1()
     {
-        animator.Play("DoorCloseAnimation1");
+        animator.Play("DoorCloseAnimation 1");
     }
 }

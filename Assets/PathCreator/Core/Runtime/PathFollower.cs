@@ -17,6 +17,10 @@ namespace PathCreation
         public float distanceTravelled;
         public bool openDoors = false;
 
+        public GameObject doorAnchor;
+        public GameObject door;
+        public GameObject door1;
+
         public static float yExtraHeight = .9f;
         public static Vector3 heightOfCart = new Vector3(0, yExtraHeight, 0);
         public static float initialRotation = 90;
@@ -59,6 +63,31 @@ namespace PathCreation
                 distanceTravelled += extraSpace;
                 pathCreator.pathUpdated += OnPathChanged;
             }
+            if (transform.tag == Constants.trainCart)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.gameObject.CompareTag(Constants.doorAnchorTag))
+                    {
+                        doorAnchor = child.gameObject;
+                        //add doors
+                        foreach (Transform grandChild in child.transform)
+                        {
+                            if (grandChild.gameObject.CompareTag(Constants.doorTag))
+                            {
+                                if (grandChild.name==("Door")){
+                                    door = grandChild.gameObject;
+                                }
+                                else if (grandChild.name == ("Door (1)"))
+                                {
+                                    door1 = grandChild.gameObject;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
 
         void Update()
@@ -74,26 +103,22 @@ namespace PathCreation
                             print("Entered");
                             openDoors = true;
                             //play animations
-                            foreach (Transform child in gameObject.transform)
+                            if(door!=null&&door1!=null)
                             {
-                                print("count");
-                                if (child.gameObject.CompareTag(Constants.doorTag))
-                                {
-                                    print("found");
-                                    child.gameObject.GetComponent<DoorAnimation>().DoorOpenAnimation();
-                                }
+                                print("enter");
+                                door.GetComponent<DoorAnimation>().DoorOpenAnimation();
+                                door1.GetComponent<DoorAnimation1>().DoorOpenAnimation1();
                             }
                         }
                         if (innerClock >= Constants.TrainCloseDoorsTime && openDoors)
                         {
                             openDoors = false;
                             //play animations
-                            foreach (Transform child in gameObject.transform)
+                            if (door != null && door1 != null)
                             {
-                                if (child.gameObject.CompareTag(Constants.doorTag))
-                                {
-                                    child.gameObject.GetComponent<DoorAnimation>().DoorCloseAnimation();
-                                }
+                                print("exit");
+                                door.GetComponent<DoorAnimation>().DoorCloseAnimation();
+                                door1.GetComponent<DoorAnimation1>().DoorCloseAnimation1();
                             }
                         }
 

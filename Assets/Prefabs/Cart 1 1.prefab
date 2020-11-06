@@ -3615,7 +3615,7 @@ GameObject:
   - component: {fileID: 5795122588526791182}
   m_Layer: 0
   m_Name: DoorAnchor
-  m_TagString: Untagged
+  m_TagString: DoorAnchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
