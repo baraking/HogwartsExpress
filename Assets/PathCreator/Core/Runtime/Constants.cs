@@ -9,6 +9,8 @@ public class Constants
     public static readonly int TrainOpenDoorsTime = 1;
     public static readonly int TrainCloseDoorsTime = 9;
 
+    public static readonly float DistanceToTarget = 1;
+
     public static readonly string fullTrain = "Train";
     public static readonly string trainCart = "Cart";
     public static readonly string doorTag = "Door";
