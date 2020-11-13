@@ -14,12 +14,12 @@ public class WizardModel : MonoBehaviour
 
     void Start()
     {
-        int randomColor = Random.Range(0, colors.Length);
-        hat.GetComponent<Renderer>().material = colors[randomColor];
-        scarf.GetComponent<Renderer>().material = colors[randomColor];
+        int clothColor = Random.Range(0, colors.Length);
+        hat.GetComponent<Renderer>().material = colors[clothColor];
+        scarf.GetComponent<Renderer>().material = colors[clothColor];
 
         int skinColor = Random.Range(0, skins.Length);
-        head.GetComponent<Renderer>().material = skins[randomColor];
+        head.GetComponent<Renderer>().material = skins[skinColor];
     }
 
     void Update()
