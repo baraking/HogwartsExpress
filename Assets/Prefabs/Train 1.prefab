@@ -139,6 +139,10 @@ MonoBehaviour:
   targetSpeed: 0
   originPosition: {x: 0, y: 0, z: 0}
   distanceTravelled: 0
+  openDoors: 0
+  doorAnchor: {fileID: 0}
+  door: {fileID: 0}
+  door1: {fileID: 0}
   innerClock: -1
   trainSize: 0
   sizeOfCart: 4
