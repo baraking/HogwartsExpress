@@ -28,4 +28,10 @@ public class WizardSpawner : MonoBehaviour
             Instantiate(wizardPrefab, transform.position, Quaternion.identity);
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(transform.position, 1);
+    }
 }

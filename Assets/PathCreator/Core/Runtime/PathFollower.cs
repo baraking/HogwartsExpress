@@ -100,28 +100,15 @@ namespace PathCreation
                     {
                         if(innerClock>= Constants.TrainOpenDoorsTime&& innerClock < Constants.TrainCloseDoorsTime&& !openDoors)
                         {
-                            print("Entered");
+                            //notify carts to open doors
                             openDoors = true;
-                            //play animations
-                            if(door!=null&&door1!=null)
-                            {
-                                print("enter");
-                                door.GetComponent<DoorAnimation>().DoorOpenAnimation();
-                                print("entered");
-                                door1.GetComponent<DoorAnimation1>().DoorOpenAnimation1();
-                            }
+                            UpdateAllChildrenDoorStatus();
                         }
                         if (innerClock >= Constants.TrainCloseDoorsTime && openDoors)
                         {
+                            //notify carts to close doors
                             openDoors = false;
-                            //play animations
-                            if (door != null && door1 != null)
-                            {
-                                print("exit");
-                                door.GetComponent<DoorAnimation>().DoorCloseAnimation();
-                                print("exited");
-                                door1.GetComponent<DoorAnimation1>().DoorCloseAnimation1();
-                            }
+                            UpdateAllChildrenDoorStatus();
                         }
 
                         if (innerClock >= Constants.TrainStopWaitTime)
@@ -151,7 +138,26 @@ namespace PathCreation
                         }
                         UpdateAllChildrenData();
                     }
-                } 
+                }
+                else if (transform.tag == Constants.trainCart)
+                {
+                    if (door != null && door1 != null)
+                    {
+                        if (door.operDoors != openDoors || door1.operDoors != openDoors)
+                        {
+                            if (door.operDoors)
+                            {
+                                door.DoorCloseAnimation();
+                                door1.DoorCloseAnimation1();
+                            }
+                            else
+                            {
+                                door.DoorOpenAnimation();
+                                door1.DoorOpenAnimation1();
+                            }
+                        }
+                    }
+                }
 
                 distanceTravelled += speed * Time.deltaTime;
                 transform.position = heightOfCart + pathCreator.path.GetPointAtDistance(distanceTravelled - originPosition.magnitude * 0.75f, endOfPathInstruction);
@@ -203,6 +209,17 @@ namespace PathCreation
                     child.GetComponent<PathFollower>().targetSpeed = targetSpeed;
                     child.GetComponent<PathFollower>().endOfPathInstruction = endOfPathInstruction;
                     child.GetComponent<PathFollower>().previousEndOfPathInstruction = previousEndOfPathInstruction;
+                }
+            }
+        }
+
+        void UpdateAllChildrenDoorStatus()
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.gameObject.CompareTag(Constants.trainCart))
+                {
+                    child.GetComponent<PathFollower>().openDoors = openDoors;
                 }
             }
         }

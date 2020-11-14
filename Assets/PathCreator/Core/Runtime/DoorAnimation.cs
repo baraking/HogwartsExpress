@@ -5,32 +5,23 @@ using UnityEngine;
 public class DoorAnimation : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] public bool operDoors;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        operDoors = false;
     }
 
     public void DoorOpenAnimation()
     {
-        print("play");
+        operDoors = true;
         animator.Play("DoorOpenAnimation");
     }
 
     public void DoorCloseAnimation()
     {
-        animator.Play("DoorCloseAnimation");
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        print("play");
-        animator.Play("DoorOpenAnimation");
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        print("played");
+        operDoors = false;
         animator.Play("DoorCloseAnimation");
     }
 }
