@@ -106,21 +106,21 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.1
     agentHeight: 2
     agentSlope: 45
-    agentClimb: 0.4
-    ledgeDropHeight: 0
-    maxJumpAcrossDistance: 0
-    minRegionArea: 2
+    agentClimb: 1
+    ledgeDropHeight: 1
+    maxJumpAcrossDistance: 1
+    minRegionArea: 0.1
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: b7c625e2a92cc44438df6ddcb3e1c8d4, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &34408031
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,54 +761,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34df6b2b43c43934b9b3edd273db57ce, type: 3}
---- !u!1 &622546337
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 622546339}
-  - component: {fileID: 622546338}
-  m_Layer: 0
-  m_Name: WizardSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &622546338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622546337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0fb68d7f4ba7b4783665b577ad63ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingAmountOfWizards: 8
-  timeToNextSpawn: 10
-  wizardPrefab: {fileID: 6688693092880768470, guid: 93ae80673e1c65f459054039ed915a60,
-    type: 3}
-  innerClock: 0
---- !u!4 &622546339
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622546337}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35, y: 0.5, z: 97}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &703724988
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 703724988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.207394, y: 0, z: 93.94}
+  m_LocalPosition: {x: -35.207394, y: 0.71, z: 93.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 377268852}
@@ -1068,7 +1020,7 @@ PrefabInstance:
     - target: {fileID: 8931622671180755995, guid: 34df6b2b43c43934b9b3edd273db57ce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8931622671180755995, guid: 34df6b2b43c43934b9b3edd273db57ce,
         type: 3}
@@ -1668,9 +1620,13 @@ MonoBehaviour:
   originPosition: {x: 0, y: 0, z: 0}
   distanceTravelled: 0
   openDoors: 0
+  didFirstBake: 0
+  didSecondBake: 0
+  shouldBake: 0
   doorAnchor: {fileID: 0}
   door: {fileID: 0}
   door1: {fileID: 0}
+  step: {fileID: 0}
   innerClock: -1
   trainSize: 0
   sizeOfCart: 4
@@ -1857,13 +1813,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881154719}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -35.29, y: 16.86, z: 98.04}
+  m_LocalRotation: {x: 0.3127903, y: 0.63416266, z: -0.3127903, w: 0.63416266}
+  m_LocalPosition: {x: -35.29, y: 5.8, z: 98.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 52.508003, y: 90.00001, z: 0}
 --- !u!81 &1881154721
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2079,7 +2035,7 @@ PrefabInstance:
     - target: {fileID: 5886896159677504944, guid: f1ce6658a623e1e41ad0ac25f2f9c526,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3404926
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 5886896159677504944, guid: f1ce6658a623e1e41ad0ac25f2f9c526,
         type: 3}
@@ -2140,6 +2096,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1454503462}
     m_Modifications:
+    - target: {fileID: 5795122587654604855, guid: 3d808f61623027b4e9ca00b659e2bfb1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5795122587759120522, guid: 3d808f61623027b4e9ca00b659e2bfb1,
         type: 3}
       propertyPath: m_Name
@@ -2237,7 +2198,7 @@ PrefabInstance:
     - target: {fileID: 6688693092880768474, guid: 93ae80673e1c65f459054039ed915a60,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6688693092880768474, guid: 93ae80673e1c65f459054039ed915a60,
         type: 3}

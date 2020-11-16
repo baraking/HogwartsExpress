@@ -23,6 +23,7 @@ namespace PathCreation
         public GameObject doorAnchor;
         public DoorAnimation door;
         public DoorAnimation1 door1;
+        public StepAnimation step;
 
         public static float yExtraHeight = .9f;
         public static Vector3 heightOfCart = new Vector3(0, yExtraHeight, 0);
@@ -90,6 +91,10 @@ namespace PathCreation
                                 {
                                     door1 = grandChild.GetComponent<DoorAnimation1>();
                                 }
+                                else if (grandChild.name == ("Step"))
+                                {
+                                    step = grandChild.GetComponent<StepAnimation>();
+                                }
                             }
                         }
                     }
@@ -122,7 +127,7 @@ namespace PathCreation
                             didFirstBake = true;
                             shouldBake = true;
                         }
-                        if (!didSecondBake && innerClock >= Constants.TrainCloseDoorsTime - Constants.TrainDoorWaitTimeForBake)
+                        if (!didSecondBake && innerClock >= Constants.TrainCloseDoorsTime + Constants.TrainDoorWaitTimeForBake)
                         {
                             didSecondBake = true;
                             shouldBake = true;
@@ -168,17 +173,19 @@ namespace PathCreation
                 {
                     if (door != null && door1 != null)
                     {
-                        if (door.operDoors != openDoors || door1.operDoors != openDoors)
+                        if (door.operDoors != openDoors || door1.operDoors != openDoors || step.operDoors != openDoors)
                         {
                             if (door.operDoors)
                             {
                                 door.DoorCloseAnimation();
                                 door1.DoorCloseAnimation1();
+                                step.WithdrawStepAnimation();
                             }
                             else
                             {
                                 door.DoorOpenAnimation();
                                 door1.DoorOpenAnimation1();
+                                step.DrawStepAnimation();
                             }
                         }
                     }
