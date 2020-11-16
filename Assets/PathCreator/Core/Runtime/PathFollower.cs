@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace PathCreation
 {
@@ -16,6 +17,8 @@ namespace PathCreation
         public Vector3 originPosition;
         public float distanceTravelled;
         public bool openDoors = false;
+        public bool didFirstBake = false, didSecondBake = false;
+        public bool shouldBake = false;
 
         public GameObject doorAnchor;
         public DoorAnimation door;
@@ -35,6 +38,11 @@ namespace PathCreation
 
         private void Awake()
         {
+            if (transform.tag == Constants.fullTrain)
+            {
+                UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
+                UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
+            }
             previousEndOfPathInstruction = endOfPathInstruction;
             foreach (Transform child in gameObject.transform)
             {
@@ -100,21 +108,38 @@ namespace PathCreation
                     {
                         if(innerClock>= Constants.TrainOpenDoorsTime&& innerClock < Constants.TrainCloseDoorsTime&& !openDoors)
                         {
-                            //notify carts to open doors
                             openDoors = true;
                             UpdateAllChildrenDoorStatus();
                         }
                         if (innerClock >= Constants.TrainCloseDoorsTime && openDoors)
                         {
-                            //notify carts to close doors
                             openDoors = false;
                             UpdateAllChildrenDoorStatus();
+                        }
+
+                        if (!didFirstBake && innerClock >= Constants.TrainOpenDoorsTime + Constants.TrainDoorWaitTimeForBake)
+                        {
+                            didFirstBake = true;
+                            shouldBake = true;
+                        }
+                        if (!didSecondBake && innerClock >= Constants.TrainCloseDoorsTime - Constants.TrainDoorWaitTimeForBake)
+                        {
+                            didSecondBake = true;
+                            shouldBake = true;
+                        }
+                        if (shouldBake)
+                        {
+                            UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
+                            UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
+                            shouldBake = false;
                         }
 
                         if (innerClock >= Constants.TrainStopWaitTime)
                         {
                             innerClock = -1;
                             UpdateAllChildrenData();
+                            didFirstBake = false;
+                            didSecondBake = false;
                         }
                         innerClock += Time.deltaTime;
                     }

@@ -1085,11 +1085,11 @@ GameObject:
   - component: {fileID: 5795122587654604848}
   - component: {fileID: 5795122587654604849}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Floor
+  m_TagString: Walkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5795122587654604854
 Transform:
@@ -2078,6 +2078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5939683485188880414}
+  operDoors: 0
 --- !u!1 &5795122587971731240
 GameObject:
   m_ObjectHideFlags: 0
@@ -3892,6 +3893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5788477837585555228}
+  operDoors: 0
 --- !u!1 &5795122588737625318
 GameObject:
   m_ObjectHideFlags: 0

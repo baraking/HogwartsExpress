@@ -8,6 +8,7 @@ TagManager:
   - Train
   - Door
   - DoorAnchor
+  - Walkable
   layers:
   - Default
   - TransparentFX
