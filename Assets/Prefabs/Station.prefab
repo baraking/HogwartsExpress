@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5886896159004197978}
   - component: {fileID: 5886896159004197979}
   - component: {fileID: 5886896159004197976}
+  - component: {fileID: 5219763408184079186}
   m_Layer: 8
   m_Name: Surface
   m_TagString: Untagged
@@ -91,8 +92,22 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5219763408184079186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886896159004197974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c08619fad0748741baa5a787447acff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  train: {fileID: 0}
+  wizards: []
 --- !u!1 &5886896159677504945
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ TagManager:
   - Door
   - DoorAnchor
   - Walkable
+  - Wizard
   layers:
   - Default
   - TransparentFX

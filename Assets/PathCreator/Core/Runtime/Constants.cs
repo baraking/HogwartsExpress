@@ -16,4 +16,5 @@ public class Constants
     public static readonly string trainCart = "Cart";
     public static readonly string doorTag = "Door";
     public static readonly string doorAnchorTag = "DoorAnchor";
+    public static readonly string wizardTag = "Wizard";
 }
