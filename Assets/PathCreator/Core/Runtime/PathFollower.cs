@@ -180,12 +180,14 @@ namespace PathCreation
                                 door.DoorCloseAnimation();
                                 door1.DoorCloseAnimation1();
                                 step.WithdrawStepAnimation();
+                                //add instances of tragets
                             }
                             else
                             {
                                 door.DoorOpenAnimation();
                                 door1.DoorOpenAnimation1();
                                 step.DrawStepAnimation();
+                                //remove instances of tragets
                             }
                         }
                     }

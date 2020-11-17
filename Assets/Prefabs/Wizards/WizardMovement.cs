@@ -6,13 +6,16 @@ using UnityEngine.AI;
 public class WizardMovement : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;
+    public enum Mode { SearchTarget,FollowParent};
 
+    public Mode mode;
     public GameObject possibleTargets;
     Vector3 curTarget;
 
     private void Start()
     {
         possibleTargets = GameObject.Find("Targets");
+        mode = Mode.SearchTarget;
     }
 
     void Update()
@@ -29,10 +32,17 @@ public class WizardMovement : MonoBehaviour
                 navMeshAgent.SetDestination(curTarget);
             }
         }
-        else if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero)
-        {
-            FindNewTarget();
+        else if (mode==Mode.SearchTarget) {
+            if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero)
+            {
+                FindNewTarget();
+            }
         }
+        else if (mode == Mode.FollowParent)
+        {
+
+        }
+            
     }
 
     public void FindNewTarget()
