@@ -8,7 +8,8 @@ public class Station : MonoBehaviour
     public List<GameObject> wizards;
 
     public GameObject targetPrefab;
-    public GameObject targets;
+    public GameObject stationTargets;
+    public GameObject trainTargets;
 
     private bool spawnedTargets;
 
@@ -25,13 +26,33 @@ public class Station : MonoBehaviour
             {
                 PutTargetsOnCarts();
                 spawnedTargets = true;
+
+                foreach (GameObject wizard in wizards)
+                {
+                    int thisWizardChanceToBoardTrain = Random.Range(1, 101);
+                    if (thisWizardChanceToBoardTrain <= Constants.chanceToBoardTrain)
+                    {
+                        wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.FollowParent;
+                        wizard.GetComponent<WizardMovement>().possibleTargets = trainTargets;
+                        wizard.GetComponent<WizardMovement>().FindNewTarget();
+                    }
+                }
             }
             else
             {
                 if (!train.GetComponent<PathCreation.PathFollower>().openDoors)
                 {
                     spawnedTargets = false;
-                    //delete them
+                    for (int i = 0; i < trainTargets.transform.childCount; i++) 
+                    { 
+                        GameObject.Destroy(trainTargets.transform.GetChild(0).gameObject);
+                    }
+
+                    foreach (GameObject wizard in wizards)
+                    {
+                        //wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.SearchTarget;
+                        //wizard.GetComponent<WizardMovement>().possibleTargets = stationTargets;
+                    }
                 }
             }
         }
@@ -71,8 +92,14 @@ public class Station : MonoBehaviour
         {
             if (child.gameObject.CompareTag(Constants.trainCart))
             {
-                Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset1, Quaternion.identity);
-                Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset2, Quaternion.identity);
+                var newTarget1 = Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset1, Quaternion.identity);
+                var newTarget2 = Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset2, Quaternion.identity);
+
+                newTarget1.transform.parent = trainTargets.transform;
+                newTarget2.transform.parent = trainTargets.transform;
+
+                newTarget1.GetComponent<target>().parentHolder = child.gameObject;
+                newTarget2.GetComponent<target>().parentHolder = child.gameObject;
             }
         }
     }
