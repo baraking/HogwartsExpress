@@ -35,6 +35,7 @@ public class Station : MonoBehaviour
                         wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.FollowParent;
                         wizard.GetComponent<WizardMovement>().possibleTargets = trainTargets;
                         wizard.GetComponent<WizardMovement>().FindNewTarget();
+                        wizard.GetComponent<WizardMovement>().takeOffThisStation = false;
                     }
                 }
             }
@@ -67,10 +68,14 @@ public class Station : MonoBehaviour
         if (other.tag == Constants.fullTrain)
         {
             train = other.gameObject;
+            train.GetComponent<PathCreation.PathFollower>().SetPassengersToLeaveTrainOrStay();
+            PassengersLeaveTrain();
         }
         if(other.tag == Constants.trainCart)
         {
             train = other.gameObject.transform.parent.gameObject;
+            train.GetComponent<PathCreation.PathFollower>().SetPassengersToLeaveTrainOrStay();
+            PassengersLeaveTrain();
         }
     }
 
@@ -83,6 +88,29 @@ public class Station : MonoBehaviour
         else if (other.tag == Constants.fullTrain || other.tag == Constants.trainCart)
         {
             train = null;
+        }
+    }
+
+    public void PassengersLeaveTrain()
+    {
+        foreach (Transform cart in train.transform)
+        {
+            if (cart.gameObject.CompareTag(Constants.trainCart))
+            {
+                foreach (Transform wizard in cart.transform)
+                {
+                    if (wizard.gameObject.CompareTag(Constants.wizardTag))
+                    {
+                        if (wizard.GetComponent<WizardMovement>().takeOffThisStation)
+                        {
+                            //wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.SearchTarget;
+                            wizard.GetComponent<WizardMovement>().possibleTargets = stationTargets;
+                            //wizard.GetComponent<WizardMovement>().FindNewTarget();
+                            //wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -23,4 +23,5 @@ public class Constants
     public static readonly Vector3 cartOffset2 = new Vector3(0.4f, 0, 1.5f);
 
     public static readonly float chanceToBoardTrain = 75;
+    public static readonly float chanceToLeaveTrain = 95;
 }

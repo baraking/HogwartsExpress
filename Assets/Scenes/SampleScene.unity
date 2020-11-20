@@ -1409,7 +1409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881154719}
   m_LocalRotation: {x: 0.3127903, y: 0.63416266, z: -0.3127903, w: 0.63416266}
-  m_LocalPosition: {x: -35.99, y: 5.8, z: 98.04}
+  m_LocalPosition: {x: -37.8, y: 5.8, z: 96.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1548,6 +1548,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1454503462}
     m_Modifications:
+    - target: {fileID: 810691012146950195, guid: 631eb6c012708b24a930585bfc2cc11a,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 810691012146950195, guid: 631eb6c012708b24a930585bfc2cc11a,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b9bc1a350e27594982aa6bb366ad617, type: 3}
     - target: {fileID: 7694796522188188563, guid: 631eb6c012708b24a930585bfc2cc11a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1686,6 +1696,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Station
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667601398129278468, guid: f1ce6658a623e1e41ad0ac25f2f9c526,
+        type: 3}
+      propertyPath: startingAmountOfWizards
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667601398129278468, guid: f1ce6658a623e1e41ad0ac25f2f9c526,
+        type: 3}
+      propertyPath: timeToNextSpawn
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1ce6658a623e1e41ad0ac25f2f9c526, type: 3}

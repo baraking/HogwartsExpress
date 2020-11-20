@@ -137,6 +137,7 @@ namespace PathCreation
                             UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
                             UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
                             shouldBake = false;
+                            SetPassengersToLeaveTrain();
                         }
 
                         if (innerClock >= Constants.TrainStopWaitTime)
@@ -265,6 +266,62 @@ namespace PathCreation
                 if (child.gameObject.CompareTag(Constants.trainCart))
                 {
                     child.GetComponent<PathFollower>().openDoors = openDoors;
+                }
+            }
+        }
+
+        public void SetPassengersToLeaveTrain()
+        {
+            foreach (Transform cart in gameObject.transform)
+            {
+                if (cart.gameObject.CompareTag(Constants.trainCart))
+                {
+                    foreach (Transform wizard in cart.transform)
+                    {
+                        if (wizard.gameObject.CompareTag(Constants.wizardTag))
+                        {
+                            if (wizard.GetComponent<WizardMovement>().takeOffThisStation)
+                            {
+                                wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.SearchTarget;
+                                //wizard.GetComponent<WizardMovement>().possibleTargets = stationTargets;
+                                //wizard.GetComponent<WizardMovement>().FindNewTarget();
+                                wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
+
+                                print(wizard.gameObject.name);
+                                print(wizard.GetComponent<WizardMovement>().navMeshAgent.enabled);
+                            }
+                            else
+                            {
+                                //print("I am Staying!");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void SetPassengersToLeaveTrainOrStay()
+        {
+            foreach (Transform cart in gameObject.transform)
+            {
+                if (cart.gameObject.CompareTag(Constants.trainCart))
+                {
+                    foreach (Transform wizard in cart.transform)
+                    {
+                        if (wizard.gameObject.CompareTag(Constants.wizardTag))
+                        {
+                            int thisWizardChanceToLeaveTrain = UnityEngine.Random.Range(1, 101);
+                            print(thisWizardChanceToLeaveTrain);
+                            if (thisWizardChanceToLeaveTrain <= Constants.chanceToLeaveTrain)
+                            {
+                                wizard.GetComponent<WizardMovement>().takeOffThisStation = true;
+                            }
+                            else
+                            {
+                                //print("I am Staying!");
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -12,10 +12,13 @@ public class WizardMovement : MonoBehaviour
     public GameObject possibleTargets;
     Vector3 curTarget;
 
+    public bool takeOffThisStation;
+
     private void Start()
     {
         possibleTargets = GameObject.Find("Targets");
         mode = Mode.SearchTarget;
+        takeOffThisStation = false;
     }
 
     void Update()
@@ -36,7 +39,7 @@ public class WizardMovement : MonoBehaviour
                         navMeshAgent.SetDestination(curTarget);
                     }
                 }
-                if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero)
+                if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero || curTarget == null)
                 {
                     FindNewTarget();
                 }
@@ -59,7 +62,7 @@ public class WizardMovement : MonoBehaviour
             Vector3 nextTarget = possibleTargets.transform.GetChild(random).position;
             curTarget = nextTarget;
             navMeshAgent.SetDestination(curTarget);
-            transform.parent = possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform;
+            transform.SetParent(possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform,false);
         }
     }
 }
