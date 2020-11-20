@@ -145,6 +145,7 @@ namespace PathCreation
                             UpdateAllChildrenData();
                             didFirstBake = false;
                             didSecondBake = false;
+                            ChildrenPlaySoundEffect();
                         }
                         innerClock += Time.deltaTime;
                     }
@@ -180,14 +181,12 @@ namespace PathCreation
                                 door.DoorCloseAnimation();
                                 door1.DoorCloseAnimation1();
                                 step.WithdrawStepAnimation();
-                                //add instances of tragets
                             }
                             else
                             {
                                 door.DoorOpenAnimation();
                                 door1.DoorOpenAnimation1();
                                 step.DrawStepAnimation();
-                                //remove instances of tragets
                             }
                         }
                     }
@@ -204,6 +203,7 @@ namespace PathCreation
         {
             targetSpeed = newTargetSpeed;
             UpdateAllChildrenData();
+            ChildrenPlaySoundEffect();
         }
 
         public void TrainStop(float newTargetSpeed)
@@ -212,12 +212,14 @@ namespace PathCreation
             UpdateSpeedForChildCarts(speed);
             innerClock = 0.0f;
             targetSpeed = newTargetSpeed;
+            ChildrenPlaySoundEffect();
         }
 
         public void TrainSetSpeed(float newSpeed)
         {
             speed = newSpeed;
             UpdateSpeedForChildCarts(speed);
+            ChildrenPlaySoundEffect();
         }
 
         void UpdateSpeedForChildCarts(float newSpeed)
@@ -244,6 +246,15 @@ namespace PathCreation
                     child.GetComponent<PathFollower>().endOfPathInstruction = endOfPathInstruction;
                     child.GetComponent<PathFollower>().previousEndOfPathInstruction = previousEndOfPathInstruction;
                 }
+            }
+        }
+
+        void ChildrenPlaySoundEffect()
+        {
+            Component[] audioSources = GetComponentsInChildren(typeof(AudioSource), true);
+            foreach(AudioSource source in audioSources)
+            {
+                source.Play();
             }
         }
 

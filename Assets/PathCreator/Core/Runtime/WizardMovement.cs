@@ -23,19 +23,19 @@ public class WizardMovement : MonoBehaviour
         if (navMeshAgent.enabled)
         {
             float distanceToTarget = Vector3.Distance(gameObject.transform.position, curTarget);
-            if (Input.GetMouseButtonDown(0))
+            if (mode == Mode.SearchTarget)
             {
-                Vector3 mouse = Input.mousePosition;
-                Ray castPoint = Camera.main.ScreenPointToRay(mouse);
-                RaycastHit hit;
-                if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    curTarget = hit.point;
-                    navMeshAgent.SetDestination(curTarget);
+                    Vector3 mouse = Input.mousePosition;
+                    Ray castPoint = Camera.main.ScreenPointToRay(mouse);
+                    RaycastHit hit;
+                    if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
+                    {
+                        curTarget = hit.point;
+                        navMeshAgent.SetDestination(curTarget);
+                    }
                 }
-            }
-            else if (mode == Mode.SearchTarget)
-            {
                 if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero)
                 {
                     FindNewTarget();
