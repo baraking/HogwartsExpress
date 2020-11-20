@@ -17,4 +17,7 @@ public class Constants
     public static readonly string doorTag = "Door";
     public static readonly string doorAnchorTag = "DoorAnchor";
     public static readonly string wizardTag = "Wizard";
+
+    public static readonly Vector3 cartOffset1 = new Vector3(0.4f, 0, 4);
+    public static readonly Vector3 cartOffset2 = new Vector3(0.4f, 0, 1.5f);
 }
