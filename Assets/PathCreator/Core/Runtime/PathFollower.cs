@@ -296,10 +296,11 @@ namespace PathCreation
                         {
                             if (wizard.GetComponent<WizardMovement>().takeOffThisStation)
                             {
-                                wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
+                                wizard.GetComponent<WizardMovement>().takeOffThisStation = false;
                                 wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.SearchTarget;
-                                //wizard.GetComponent<WizardMovement>().possibleTargets = stationTargets;
-                                //wizard.GetComponent<WizardMovement>().FindNewTarget();
+                                wizard.GetComponent<WizardMovement>().possibleTargets = curStation.GetComponent<Station>().stationTargets;
+                                wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
+                                wizard.GetComponent<WizardMovement>().FindNewTarget();
                             }
                             else
                             {

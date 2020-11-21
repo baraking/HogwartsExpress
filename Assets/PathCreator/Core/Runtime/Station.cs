@@ -75,6 +75,8 @@ public class Station : MonoBehaviour
             train.GetComponent<PathCreation.PathFollower>().curStation = gameObject;
             train.GetComponent<PathCreation.PathFollower>().UpdateCurStation();
 
+            train.GetComponent<PathCreation.PathFollower>().SetPassengersToLeaveTrainOrStay();
+
             //PassengersLeaveTrain();
         }
         if (other.tag == Constants.trainCart)
@@ -82,6 +84,8 @@ public class Station : MonoBehaviour
             train = other.gameObject.transform.parent.gameObject;
             train.GetComponent<PathCreation.PathFollower>().curStation = gameObject;
             train.GetComponent<PathCreation.PathFollower>().UpdateCurStation();
+
+            train.GetComponent<PathCreation.PathFollower>().SetPassengersToLeaveTrainOrStay();
 
             //PassengersLeaveTrain();
         }
