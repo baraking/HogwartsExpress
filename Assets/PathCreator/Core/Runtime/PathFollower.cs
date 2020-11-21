@@ -300,6 +300,8 @@ namespace PathCreation
                                 wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.SearchTarget;
                                 wizard.GetComponent<WizardMovement>().possibleTargets = curStation.GetComponent<Station>().stationTargets;
                                 wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
+
+                                //wizard.GetComponent<WizardMovement>().SetNewParent();
                                 wizard.GetComponent<WizardMovement>().FindNewTarget();
                             }
                             else

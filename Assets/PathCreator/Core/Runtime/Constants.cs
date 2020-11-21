@@ -5,9 +5,9 @@ using UnityEngine;
 public class Constants
 {
     public static readonly float OriginalSpeed = 15;
-    public static readonly int TrainStopWaitTime = 15;
+    public static readonly int TrainStopWaitTime = 18;
     public static readonly int TrainOpenDoorsTime = 3;
-    public static readonly int TrainCloseDoorsTime = 12;
+    public static readonly int TrainCloseDoorsTime = 15;
     public static readonly float TrainDoorWaitTimeForBake = 1;
 
     public static readonly float DistanceToTarget = 1;
