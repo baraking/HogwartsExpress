@@ -62,7 +62,12 @@ public class WizardMovement : MonoBehaviour
             Vector3 nextTarget = possibleTargets.transform.GetChild(random).position;
             curTarget = nextTarget;
             navMeshAgent.SetDestination(curTarget);
-            transform.SetParent(possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform,false);
+
+            if (mode == Mode.FollowParent)
+            {
+                transform.SetParent(possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform, true);
+            }
+            //transform.parent = possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform;
         }
     }
 }

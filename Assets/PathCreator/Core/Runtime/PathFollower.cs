@@ -37,8 +37,11 @@ namespace PathCreation
         public float sizeOfSpaceBetweenCarts = 0.5f;
         public float extraSpace = 0;
 
+        public GameObject curStation;
+
         private void Awake()
         {
+            curStation = null;
             if (transform.tag == Constants.fullTrain)
             {
                 UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
@@ -250,6 +253,17 @@ namespace PathCreation
             }
         }
 
+        public void UpdateCurStation()
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.gameObject.CompareTag(Constants.trainCart))
+                {
+                    child.GetComponent<PathFollower>().curStation = curStation;
+                }
+            }
+        }
+
         void ChildrenPlaySoundEffect()
         {
             Component[] audioSources = GetComponentsInChildren(typeof(AudioSource), true);
@@ -282,13 +296,10 @@ namespace PathCreation
                         {
                             if (wizard.GetComponent<WizardMovement>().takeOffThisStation)
                             {
+                                wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
                                 wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.SearchTarget;
                                 //wizard.GetComponent<WizardMovement>().possibleTargets = stationTargets;
                                 //wizard.GetComponent<WizardMovement>().FindNewTarget();
-                                wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
-
-                                print(wizard.gameObject.name);
-                                print(wizard.GetComponent<WizardMovement>().navMeshAgent.enabled);
                             }
                             else
                             {
@@ -311,7 +322,6 @@ namespace PathCreation
                         if (wizard.gameObject.CompareTag(Constants.wizardTag))
                         {
                             int thisWizardChanceToLeaveTrain = UnityEngine.Random.Range(1, 101);
-                            print(thisWizardChanceToLeaveTrain);
                             if (thisWizardChanceToLeaveTrain <= Constants.chanceToLeaveTrain)
                             {
                                 wizard.GetComponent<WizardMovement>().takeOffThisStation = true;

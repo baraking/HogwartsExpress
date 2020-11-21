@@ -35,7 +35,7 @@ public class Station : MonoBehaviour
                         wizard.GetComponent<WizardMovement>().mode = WizardMovement.Mode.FollowParent;
                         wizard.GetComponent<WizardMovement>().possibleTargets = trainTargets;
                         wizard.GetComponent<WizardMovement>().FindNewTarget();
-                        wizard.GetComponent<WizardMovement>().takeOffThisStation = false;
+                        //wizard.GetComponent<WizardMovement>().takeOffThisStation = false;
                     }
                 }
             }
@@ -64,18 +64,26 @@ public class Station : MonoBehaviour
         if (other.tag == Constants.wizardTag)
         {
             wizards.Add(other.gameObject);
+            if (other.GetComponent<WizardMovement>().takeOffThisStation)
+            {
+                other.GetComponent<WizardMovement>().possibleTargets = stationTargets;
+            }
         }
         if (other.tag == Constants.fullTrain)
         {
             train = other.gameObject;
-            train.GetComponent<PathCreation.PathFollower>().SetPassengersToLeaveTrainOrStay();
-            PassengersLeaveTrain();
+            train.GetComponent<PathCreation.PathFollower>().curStation = gameObject;
+            train.GetComponent<PathCreation.PathFollower>().UpdateCurStation();
+
+            //PassengersLeaveTrain();
         }
-        if(other.tag == Constants.trainCart)
+        if (other.tag == Constants.trainCart)
         {
             train = other.gameObject.transform.parent.gameObject;
-            train.GetComponent<PathCreation.PathFollower>().SetPassengersToLeaveTrainOrStay();
-            PassengersLeaveTrain();
+            train.GetComponent<PathCreation.PathFollower>().curStation = gameObject;
+            train.GetComponent<PathCreation.PathFollower>().UpdateCurStation();
+
+            //PassengersLeaveTrain();
         }
     }
 
@@ -83,10 +91,13 @@ public class Station : MonoBehaviour
     {
         if (other.tag == Constants.wizardTag)
         {
+            other.GetComponent<WizardMovement>().takeOffThisStation = false;
             wizards.Remove(other.gameObject);
         }
         else if (other.tag == Constants.fullTrain || other.tag == Constants.trainCart)
         {
+            train.GetComponent<PathCreation.PathFollower>().curStation = null;
+            train.GetComponent<PathCreation.PathFollower>().UpdateCurStation();
             train = null;
         }
     }
@@ -107,6 +118,7 @@ public class Station : MonoBehaviour
                             wizard.GetComponent<WizardMovement>().possibleTargets = stationTargets;
                             //wizard.GetComponent<WizardMovement>().FindNewTarget();
                             //wizard.GetComponent<WizardMovement>().navMeshAgent.enabled = true;
+                            wizard.transform.SetParent(transform, true);
                         }
                     }
                 }
@@ -118,7 +130,7 @@ public class Station : MonoBehaviour
     {
         foreach (Transform child in train.transform)
         {
-            if (child.gameObject.CompareTag(Constants.trainCart))
+            if (child.gameObject.CompareTag(Constants.trainCart) && child.gameObject.name.Contains(Constants.trainCart))
             {
                 var newTarget1 = Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset1, Quaternion.identity);
                 var newTarget2 = Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset2, Quaternion.identity);
