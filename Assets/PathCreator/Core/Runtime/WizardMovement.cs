@@ -42,6 +42,7 @@ public class WizardMovement : MonoBehaviour
                 if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero || curTarget == null)
                 {
                     transform.SetParent(possibleTargets.transform.parent.transform.parent, true);
+                    transform.localScale = Constants.WizardScale;
                     FindNewTarget();
                 }
             }
@@ -67,6 +68,7 @@ public class WizardMovement : MonoBehaviour
             if (mode == Mode.FollowParent)
             {
                 transform.SetParent(possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform, true);
+                transform.localScale = Constants.WizardScale;
             }
             //transform.parent = possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform;
         }
@@ -76,5 +78,6 @@ public class WizardMovement : MonoBehaviour
     {
         int random = Random.Range(0, possibleTargets.transform.childCount);
         transform.SetParent(possibleTargets.transform.GetChild(random).GetComponent<target>().parentHolder.transform, true);
+        transform.localScale = Constants.WizardScale;
     }
 }

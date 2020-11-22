@@ -67,7 +67,7 @@ public class Station : MonoBehaviour
             if (other.GetComponent<WizardMovement>().takeOffThisStation)
             {
                 other.GetComponent<WizardMovement>().possibleTargets = stationTargets;
-                //other.transform.SetParent(transform.parent, true);
+                other.transform.localScale = Constants.WizardScale;
             }
         }
         if (other.tag == Constants.fullTrain)
