@@ -8,8 +8,11 @@ public class WizardModel : MonoBehaviour
     public GameObject hat;
     public GameObject scarf;
     public GameObject head;
+    public GameObject robeModel;
+    public GameObject hatPoint;
 
     public Material[] skins;
+    public Material[] robes;
     public Material[] colors;
 
     void Start()
@@ -20,6 +23,10 @@ public class WizardModel : MonoBehaviour
 
         int skinColor = Random.Range(0, skins.Length);
         head.GetComponent<Renderer>().material = skins[skinColor];
+
+        int robeColor = Random.Range(0, robes.Length);
+        robeModel.GetComponent<Renderer>().material = robes[clothColor];
+        hatPoint.GetComponent<Renderer>().material = robes[clothColor];
     }
 
     void Update()
