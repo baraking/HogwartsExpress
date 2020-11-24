@@ -16,7 +16,7 @@ public class WizardSpawner : MonoBehaviour
         for (int i = 0; i < startingAmountOfWizards; i++)
         {
             var newTarget = Instantiate(wizardPrefab, transform.position, Quaternion.identity);
-            newTarget.transform.SetParent(transform.parent, false);
+            newTarget.transform.SetParent(transform.parent, true);
         }
     }
 
