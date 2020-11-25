@@ -63,6 +63,11 @@ public class Station : MonoBehaviour
     {
         if (other.tag == Constants.wizardTag)
         {
+            if(other.GetComponent<WizardMovement>().possibleTargets == null)
+            {
+                other.GetComponent<WizardMovement>().possibleTargets = stationTargets;
+            }
+
             wizards.Add(other.gameObject);
             if (other.GetComponent<WizardMovement>().takeOffThisStation)
             {

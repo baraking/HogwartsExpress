@@ -16,7 +16,6 @@ public class WizardMovement : MonoBehaviour
 
     private void Start()
     {
-        possibleTargets = GameObject.Find("Targets");
         mode = Mode.SearchTarget;
         takeOffThisStation = false;
     }
@@ -25,6 +24,11 @@ public class WizardMovement : MonoBehaviour
     {
         if (navMeshAgent.enabled)
         {
+            if (possibleTargets == null)
+            {
+                return;
+            }
+
             float distanceToTarget = Vector3.Distance(gameObject.transform.position, curTarget);
             if (mode == Mode.SearchTarget)
             {
