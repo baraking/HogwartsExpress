@@ -114,8 +114,8 @@ public class Station : MonoBehaviour
         {
             if (child.gameObject.CompareTag(Constants.trainCart) && child.gameObject.name.Contains(Constants.trainCart))
             {
-                var newTarget1 = Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset1, Quaternion.identity);
-                var newTarget2 = Instantiate(targetPrefab, child.gameObject.transform.position + Constants.cartOffset2, Quaternion.identity);
+                var newTarget1 = Instantiate(targetPrefab, child.gameObject.transform.position + transform.forward * Constants.cartOffset1, Quaternion.identity);
+                var newTarget2 = Instantiate(targetPrefab, child.gameObject.transform.position + transform.forward * Constants.cartOffset2, Quaternion.identity);
 
                 newTarget1.transform.parent = trainTargets.transform;
                 newTarget2.transform.parent = trainTargets.transform;

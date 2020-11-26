@@ -19,8 +19,8 @@ public class Constants
     public static readonly string doorAnchorTag = "DoorAnchor";
     public static readonly string wizardTag = "Wizard";
 
-    public static readonly Vector3 cartOffset1 = new Vector3(-4.1f, 0, 0);
-    public static readonly Vector3 cartOffset2 = new Vector3(-1.6f, 0, 0);
+    public static readonly float cartOffset1 = 4.1f;
+    public static readonly float cartOffset2 = 1.6f;
 
     public static readonly Vector3 WizardScale = new Vector3(0.15f, 0.15f, 0.15f);
 
