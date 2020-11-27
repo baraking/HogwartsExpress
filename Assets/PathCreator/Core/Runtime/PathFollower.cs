@@ -150,7 +150,7 @@ namespace PathCreation
                             didFirstBake = false;
                             didSecondBake = false;
                             ChildrenPlaySoundEffect();
-                            print(countTrainPassengers());
+                            print("Passengers on the Train: " + countTrainPassengers());
                         }
                         innerClock += Time.deltaTime;
                     }

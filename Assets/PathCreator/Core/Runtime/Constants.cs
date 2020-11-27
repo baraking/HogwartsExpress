@@ -26,4 +26,7 @@ public class Constants
 
     public static readonly float chanceToBoardTrain = 75;
     public static readonly float chanceToLeaveTrain = 95;
+
+    public static readonly int MapMinHeight = 25;
+    public static readonly int MapMaxHeight = 100;
 }
