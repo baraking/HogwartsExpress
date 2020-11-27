@@ -61,7 +61,7 @@ namespace PathCreation
 
         void Start() {
             originPosition = transform.localPosition;
-            targetSpeed = speed;
+            targetSpeed = speed / 3;
             if (pathCreator == null)
             {
                 if (transform.parent != null && transform.parent.tag == Constants.fullTrain)
@@ -150,6 +150,7 @@ namespace PathCreation
                             didFirstBake = false;
                             didSecondBake = false;
                             ChildrenPlaySoundEffect();
+                            print(countTrainPassengers());
                         }
                         innerClock += Time.deltaTime;
                     }
@@ -368,6 +369,25 @@ namespace PathCreation
         float GetRealtedLocationOnTrack()
         {
             return ((distanceTravelled - originPosition.magnitude * 0.75f) / pathCreator.path.length);
+        }
+
+        public int countTrainPassengers()
+        {
+            int amount = 0;
+            foreach (Transform cart in gameObject.transform)
+            {
+                if (cart.gameObject.CompareTag(Constants.trainCart))
+                {
+                    foreach (Transform wizard in cart.transform)
+                    {
+                        if (wizard.gameObject.CompareTag(Constants.wizardTag))
+                        {
+                            amount++;
+                        }
+                    }
+                }
+            }
+            return amount;
         }
 
 
