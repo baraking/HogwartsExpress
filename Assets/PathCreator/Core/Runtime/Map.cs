@@ -6,7 +6,7 @@ public class Map : MonoBehaviour
 {
 
     public GameObject ui;
-    public int height;
+    public float height;
 
     void Update()
     {

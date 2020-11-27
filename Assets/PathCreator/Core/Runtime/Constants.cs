@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Constants
 {
-    public static readonly float OriginalSpeed = 15;
+    public static readonly float OriginalSpeed = 12;
+    public static readonly int maxSpeed = 25;
+    public static readonly int minSpeed = 1;
     public static readonly int TrainStopWaitTime = 18;
     public static readonly int TrainOpenDoorsTime = 3;
     public static readonly int TrainCloseDoorsTime = 15;
     public static readonly float TrainDoorWaitTimeForBake = 1;
 
     public static readonly float DistanceToTarget = 1;
-    public static readonly float CloseDistanceToTarget = 0.5f;
+    public static readonly float CloseDistanceToTarget = 1.0f;
 
     public static readonly string fullTrain = "Train";
     public static readonly string trainCart = "Cart";

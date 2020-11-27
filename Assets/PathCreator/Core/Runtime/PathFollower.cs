@@ -20,6 +20,8 @@ namespace PathCreation
         public bool didFirstBake = false, didSecondBake = false;
         public bool shouldBake = false;
 
+        public int numberOfPassengers;
+
         public GameObject doorAnchor;
         public DoorAnimation door;
         public DoorAnimation1 door1;
@@ -60,6 +62,7 @@ namespace PathCreation
         }
 
         void Start() {
+            numberOfPassengers = 0;
             originPosition = transform.localPosition;
             targetSpeed = speed;
             if (pathCreator == null)
@@ -150,7 +153,8 @@ namespace PathCreation
                             didFirstBake = false;
                             didSecondBake = false;
                             ChildrenPlaySoundEffect();
-                            print("Passengers on the Train: " + countTrainPassengers());
+                            //print("Passengers on the Train: " + countTrainPassengers());
+                            numberOfPassengers = countTrainPassengers();
                         }
                         innerClock += Time.deltaTime;
                     }
