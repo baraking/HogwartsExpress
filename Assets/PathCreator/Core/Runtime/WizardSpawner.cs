@@ -7,6 +7,7 @@ public class WizardSpawner : MonoBehaviour
     public int startingAmountOfWizards = 8;
     public float timeToNextSpawn = 10;
     public GameObject wizardPrefab;
+    public GameObject station;
 
     public float innerClock;
 
@@ -22,12 +23,15 @@ public class WizardSpawner : MonoBehaviour
 
     void Update()
     {
-        innerClock += Time.deltaTime;
-        if (innerClock >= timeToNextSpawn)
+        if (station.GetComponent<Station>().train == null)
         {
-            innerClock = 0;
-            var newTarget = Instantiate(wizardPrefab, transform.position, Quaternion.identity);
-            newTarget.transform.SetParent(transform.parent, false);
+            innerClock += Time.deltaTime;
+            if (innerClock >= timeToNextSpawn)
+            {
+                innerClock = 0;
+                var newTarget = Instantiate(wizardPrefab, transform.position, Quaternion.identity);
+                newTarget.transform.SetParent(transform.parent, false);
+            }
         }
     }
 

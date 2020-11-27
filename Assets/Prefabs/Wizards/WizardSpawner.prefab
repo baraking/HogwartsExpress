@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0fb68d7f4ba7b4783665b577ad63ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingAmountOfWizards: 8
-  timeToNextSpawn: 10
+  startingAmountOfWizards: 25
+  timeToNextSpawn: 20
   wizardPrefab: {fileID: 6688693092880768470, guid: 93ae80673e1c65f459054039ed915a60,
     type: 3}
   innerClock: 0

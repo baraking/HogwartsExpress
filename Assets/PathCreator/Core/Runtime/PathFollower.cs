@@ -61,7 +61,7 @@ namespace PathCreation
 
         void Start() {
             originPosition = transform.localPosition;
-            targetSpeed = speed / 3;
+            targetSpeed = speed;
             if (pathCreator == null)
             {
                 if (transform.parent != null && transform.parent.tag == Constants.fullTrain)
