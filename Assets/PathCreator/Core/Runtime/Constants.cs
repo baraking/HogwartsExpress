@@ -13,7 +13,7 @@ public class Constants
     public static readonly float TrainDoorWaitTimeForBake = 1;
 
     public static readonly float DistanceToTarget = 1;
-    public static readonly float CloseDistanceToTarget = 1.0f;
+    public static readonly float CloseDistanceToTarget = 0.5f;
 
     public static readonly string fullTrain = "Train";
     public static readonly string trainCart = "Cart";
@@ -25,6 +25,7 @@ public class Constants
     public static readonly float cartOffset2 = 1.6f;
 
     public static readonly Vector3 WizardScale = new Vector3(0.15f, 0.15f, 0.15f);
+    public static readonly Vector3 WizardScaleOnTrain = new Vector3(0.15f, 0.3f, 0.15f);
 
     public static readonly float chanceToBoardTrain = 75;
     public static readonly float chanceToLeaveTrain = 95;

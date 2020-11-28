@@ -52,6 +52,7 @@ public class WizardMovement : MonoBehaviour
             }
             else if (mode == Mode.FollowParent)
             {
+                transform.localScale = Constants.WizardScaleOnTrain;
                 if (distanceToTarget < Constants.CloseDistanceToTarget || curTarget == Vector3.zero)
                 {
                     navMeshAgent.enabled = false;
