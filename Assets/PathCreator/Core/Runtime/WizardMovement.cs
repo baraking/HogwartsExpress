@@ -32,7 +32,7 @@ public class WizardMovement : MonoBehaviour
             float distanceToTarget = Vector3.Distance(gameObject.transform.position, curTarget);
             if (mode == Mode.SearchTarget)
             {
-                if (Input.GetMouseButtonDown(0))
+                /*if (Input.GetMouseButtonDown(0))
                 {
                     Vector3 mouse = Input.mousePosition;
                     Ray castPoint = Camera.main.ScreenPointToRay(mouse);
@@ -42,7 +42,7 @@ public class WizardMovement : MonoBehaviour
                         curTarget = hit.point;
                         navMeshAgent.SetDestination(curTarget);
                     }
-                }
+                }*/
                 if (distanceToTarget < Constants.DistanceToTarget || curTarget == Vector3.zero || curTarget == null)
                 {
                     transform.SetParent(possibleTargets.transform.parent.transform.parent, true);
