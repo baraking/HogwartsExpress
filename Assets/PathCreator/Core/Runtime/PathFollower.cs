@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.AI;
 
 namespace PathCreation
