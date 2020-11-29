@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -54,5 +55,10 @@ public class UI_Manager : MonoBehaviour
     void UpdateSpeed()
     {
         train.GetComponent<PathCreation.PathFollower>().targetSpeed = speedSlider.value;
+    }
+
+    public void OpenMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
