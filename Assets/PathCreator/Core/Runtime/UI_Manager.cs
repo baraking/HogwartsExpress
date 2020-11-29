@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class UI_Manager : MonoBehaviour
 {
     public GameObject mapCamera;
+    public GameObject trainCamera;
     public Slider heightSlider;
+    public Slider horizonSlider;
     public Slider speedSlider;
     public GameObject train;
 
@@ -17,6 +19,9 @@ public class UI_Manager : MonoBehaviour
     {
         heightSlider.maxValue = Constants.MapMaxHeight;
         heightSlider.minValue = Constants.MapMinHeight;
+
+        horizonSlider.maxValue = Constants.TrainCameraRightMax;
+        horizonSlider.minValue = Constants.TrainCameraLeftMax;
 
         speedSlider.maxValue = Constants.maxSpeed;
         speedSlider.minValue = Constants.minSpeed;
@@ -29,14 +34,21 @@ public class UI_Manager : MonoBehaviour
         numberOfPassengers.text = train.GetComponent<PathCreation.PathFollower>().numberOfPassengers.ToString();
         trainSpeedText.text = train.GetComponent<PathCreation.PathFollower>().targetSpeed.ToString();
         heightSlider.onValueChanged.AddListener(delegate { UpdateHeight(); });
+        horizonSlider.onValueChanged.AddListener(delegate { UpdateHorizon(); });
         speedSlider.onValueChanged.AddListener(delegate { UpdateSpeed(); });
         UpdateHeight();
+        UpdateHorizon();
         UpdateSpeed();
     }
 
     void UpdateHeight()
     {
         mapCamera.GetComponent<Map>().height = heightSlider.value;
+    }
+
+    void UpdateHorizon()
+    {
+        trainCamera.GetComponent<TrainCamera>().horizon = horizonSlider.value;
     }
 
     void UpdateSpeed()

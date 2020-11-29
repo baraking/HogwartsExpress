@@ -32,4 +32,7 @@ public class Constants
 
     public static readonly int MapMinHeight = 25;
     public static readonly int MapMaxHeight = 100;
+
+    public static readonly int TrainCameraLeftMax = -5;
+    public static readonly int TrainCameraRightMax = 5;
 }
